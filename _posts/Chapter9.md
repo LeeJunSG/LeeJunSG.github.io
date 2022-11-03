@@ -33,7 +33,7 @@
 
 단순(단변량) 선형 회귀의 목표는 단일 특성(설명 변수, x)과 연속값 목표(반응 변수, y) 간의 관계를 모델링하는 것입니다. 설명 변수가 하나인 선형 모델의 방정식은 다음과 같이 정의됩니다.
 
-![image-20221103155919473](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221103155919473.png)
+![그림](/image/image-20221103155919473.png)
 
 여기서 매개변수(편향 단위) b는 y축 절편을 나타내고 w1은 설명변수의 가중치 계수를 나타냅니다. 우리의 목표는 설명 변수와 목표 변수 사이의 관계를 설명하기 위해 선형 방정식의 가중치를 배우는 것입니다. 그러면 훈련 데이터 세트의 일부가 아닌 새로운 설명 변수의 응답을 예측하는 데 사용할 수 있습니다.
 
@@ -41,7 +41,7 @@
 
 
 
-![image-20221102192917624](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221102192917624.png)
+![그림](/image/image-20221102192917624.png)
 
 이 가장 잘 맞는 선은 회귀선이라고도 하며 회귀선에서 훈련 예제까지의 수직선은 소위 오프셋 또는 잔차(예측 오류)입니다.
 
@@ -53,13 +53,13 @@
 
 - 다중 선형 회귀 :   
 
-  ![그림입니다. 원본 그림의 이름: CLP000045fc0001.bmp 원본 그림의 크기: 가로 429pixel, 세로 56pixel](file:///C:\Users\Juns\AppData\Local\Temp\Hnc\BinData\EMB000045fc3863.bmp)
+![그림](/image/EMB000045fc3863.bmp)
 
   다음 그림은 두 가지 기능이 있는 다중 선형 회귀 모델의 2차원 적합 초평면
 
   
 
-![그림입니다. 원본 그림의 이름: CLP000045fc0002.bmp 원본 그림의 크기: 가로 548pixel, 세로 368pixel](file:///C:\Users\Juns\AppData\Local\Temp\Hnc\BinData\EMB000045fc3867.bmp)  
+![그림](/image/EMB000045fc3867.bmp)  
 
 
 
@@ -95,8 +95,7 @@ pandas read_csv 함수를 사용한 Ames Housing 데이터 세트를 로드
 
 
 사용되는 데이터 세트:
-
-![image-20221103180421290](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221103180421290.png)
+![그림](/image/image-20221103180421290.png)
 
 
 
@@ -124,7 +123,7 @@ Exploratory data analysi(EDA)(탐색적 데이터 분석)은 기계 학습 모�
 
 산점도 행렬(scatterplot matrix)의 생성 예 : 
 
-![image-20221103180829350](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221103180829350.png)
+![그림](/image/image-20221103180829350.png)
 
 위의 그림의 산점도 행렬을 사용하여 이제 데이터가 어떻게 분포되어 있고 이상치가 포함되어 있는지 여부를 확인할 수 있다. 
 
@@ -148,7 +147,7 @@ Exploratory data analysi(EDA)(탐색적 데이터 분석)은 기계 학습 모�
 - 두 특성은 r = 1이면 완전한 양의 상관 관계가 있고 r = 0이면 상관 관계가 없으며 r = -1이면 완전한 음의 상관 관계임
 - Pearson의 상관 계수는 x와 y(분자)의 두 특성 간의 공분산을 표준 편차(분모)의 곱으로 나눈 값으로 간단히 계산할 수 있음.
 
-![image-20221103183021176](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221103183021176.png)
+![그림](/image/mage-20221103183021176.png)
 
 
 
@@ -158,7 +157,7 @@ Exploratory data analysi(EDA)(탐색적 데이터 분석)은 기계 학습 모�
 
 상관 행렬 배열을 히트 맵으로 플로팅 결과 :
 
-![image-20221103184724731](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221103184724731.png)
+![그림](/image/image-20221103184724731.png)
 
 - 선형 회귀 모델에 맞추기 위해 목표 변수인 SalePrice와 상관 관계가 높은 기능에 관심이 있음
 
@@ -176,7 +175,7 @@ Adaline의 이 손실 함수는 MSE(평균 제곱 오차)이며 OLS에 사용하
 
 
 
-![image-20221103190708822](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221103190708822.png)
+![그림](/image/image-20221103190708822.png)
 
 위의 식의 y^는 예측값 𝑦^=w^(t)x입니다(1/2은 GD의 업데이트 규칙을 도출하기 위해 편의상 사용됨). 
 
@@ -188,7 +187,7 @@ Adaline의 GD 구현을 가져와서 임계값 함수를 제거하여 구현.
 
 - 선형 회귀 모델:
 
-![image-20221103194636053](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221103194636053.png)
+![그림](/image/image-20221103194636053.png)
 
 데이터의 많은 경우에서 거주 지역의 크기가 주택 가격을 잘 설명하지 못한다는 것을 확인할 수 있다. 
 
@@ -202,7 +201,7 @@ Adaline의 GD 구현을 가져와서 임계값 함수를 제거하여 구현.
 - LAPACK(Linear Algebra Package) 기반으로 고도로 최적화된 코드 최적화를 사용함
 -  scikit-learn의 선형 회귀 구현은 (S)GD 기반 최적화를 사용하지 않으므로 표준화되지 않은 변수에서도 작동하므로 표준화 단계를 건너뛸 수 있음
 
-![image-20221103195415640](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221103195415640.png)
+![그림](/image/image-20221103195415640.png)
 
 이 코드를 실행하면 알 수 있듯이 표준화되지 않은 Gr Liv Area 및 SalePrice 변수가 적용된 scikit-learn의 LinearRegression 모델은 기능이 표준화되지 않았기 때문에 다른 모델 계수를 산출한다. 
 
@@ -240,7 +239,7 @@ scikit-learn의 RANSACRegressor 클래스에서 구현된 RANSAC 알고리즘과
 
 
 
-![image-20221103201212204](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221103201212204.png)
+![그림](/image/image-20221103201212204.png)
 
 
 
@@ -257,27 +256,27 @@ scikit-learn의 RANSACRegressor 클래스에서 구현된 RANSAC 알고리즘과
   
   RANSAC 선형 회귀 모델에서 inlier와 outlier를 가져와 선형 피팅 : 
 
-![image-20221103201237235](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221103201237235.png)
+![그림](/image/image-20221103201237235.png)
 
 아래 그림에서 볼 수 있듯이 선형 회귀 모델은 감지된 inlier 세트에 맞춰졌으며 원으로 표시함
 
 
 
-![image-20221103201301615](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221103201301615.png)
+![그림](/image/image-20221103201301615.png)
 
 다음 코드를 실행하여 모델의 기울기와 절편을 인쇄할 때 선형 회귀선은 RANSAC를 사용하지 않고 이전 섹션에서 얻은 적합도와 약간 다름
 
-![image-20221103201332902](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221103201332902.png)
+![그림](/image/image-20221103201332902.png)
 
 잔류_임계값 매개변수를 없음으로 설정했기 때문에 RANSAC는 MAD를 사용하여 inlier 및 outlier에 플래그를 지정하기 위한 임계값을 계산함. 이 데이터 세트의 MAD는 다음과 같이 계산할 수 있다.
 
-![image-20221103201354606](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221103201354606.png)
+![그림](/image/image-20221103201354606.png)
 
 더 적은 수의 데이터 포인트를 이상값으로 식별하려는 경우 이전 MAD보다 큰 잔여 임계값 값을 선택할 수 있다.
 
 아래 그림은 잔여 임계값이 65,000인 RANSAC 선형 회귀 모델의 이상값과 이상값 :
 
-![image-20221103201528416](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221103201528416.png)
+![그림](/image/image-20221103201528416.png)
 
 
 
@@ -291,7 +290,7 @@ RANSAC를 사용하여 이 데이터 세트에서 이상값의 잠재적인 영�
 
 다중 회귀 모델을 훈련 : 
 
-![image-20221103203226177](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221103203226177.png)
+![그림](/image/image-20221103203226177.png)
 
 실제 값과 예측 값 간의 차이 또는 수직 거리를 그림.
 
@@ -301,13 +300,13 @@ RANSAC를 사용하여 이 데이터 세트에서 이상값의 잠재적인 영�
 
 잔차 플롯을 플로팅 :
 
-![image-20221103203515826](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221103203515826.png)
+![그림](/image/image-20221103203515826.png)
 
 
 
 아래 그림과 같이 x축 원점을 통과하는 선이 있는 테스트 및 교육 데이터 세트에 대한 잔차 플롯이 표시됨
 
-![image-20221103203556343](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221103203556343.png)
+![그림](/image/image-20221103203556343.png)
 
 
 
@@ -323,7 +322,7 @@ RANSAC를 사용하여 이 데이터 세트에서 이상값의 잠재적인 영�
 
 다음 식은 경사하강법에서 손실 도함수를 단순화하는 데 자주 사용되는 1/2 스케일링 계수가 없는 MSE :
 
-![image-20221103203655804](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221103203655804.png)
+![그림](/image/image-20221103203655804.png)
 
 교차 검증 및 모델 선택을 위해 MSE를 사용할 수 있다.
 분류 정확도와 마찬가지로 MSE도 표본 크기 n에 따라 정규화합니다. 이를 통해 다양한 샘플 크기(예: 학습 곡선의 맥락에서)를 비교할 수도 있다.
@@ -333,7 +332,7 @@ RANSAC를 사용하여 이 데이터 세트에서 이상값의 잠재적인 영�
 
 훈련 데이터 세트의 MSE가 테스트 세트보다 크다. 이는 모델이 훈련 데이터에 약간 과적합되고 있음을 나타내는 지표이다. 원래 단위 척도에 오류를 표시하는 것이 더 직관적일 수 있다. 따라서 MSE의 제곱근을 계산하도록 선택할 수 있다. 잘못된 예측을 약간 덜 강조하는 평균 절대 오차(MAE):
 
-![image-20221104061254911](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221104061254911.png)
+![그림](/image/image-20221104061254911.png)
 
 테스트 세트 MAE를 기반으로 모델이 평균적으로 약 $25,000의 오차를 발생시킨다고 말할 수 있다.
 
@@ -343,7 +342,7 @@ RANSAC를 사용하여 이 데이터 세트에서 이상값의 잠재적인 영�
 
 
 
-![image-20221104060935588](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221104060935588.png)
+![그림](/image/image-20221104060935588.png)
 
 
 
@@ -366,12 +365,11 @@ RANSAC를 사용하여 이 데이터 세트에서 이상값의 잠재적인 영�
 릿지 회귀는 MSE 손실 함수에 가중치의 제곱합을 단순히 추가하는 L2 패널티 모델이다.
 
 
-
-![image-20221104062045700](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221104062045700.png)
+![그림](/image/image-20221104062045700.png)
 
 - L2 항은 다음과 같이 정의됩니다.
 
-![image-20221104062110119](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221104062110119.png)
+![그림](/image/image-20221104062110119.png)
 
 하이퍼파라미터 𝜆𝜆의 값을 증가시켜 정규화 강도를 높이고 모델의 가중치를 줄인다. 바이어스 단위 b는 정규화되지 않는다. 
 
@@ -379,11 +377,11 @@ RANSAC를 사용하여 이 데이터 세트에서 이상값의 잠재적인 영�
 
 희소 모델로 이어질 수 있는 다른 접근 방식은 LASSO이다. 정규화 강도에 따라 특정 가중치가 0이 될 수 있으며, 이는 LASSO를 감독 기능 선택 기술로 유용하게 만든다.
 
-![image-20221104062132736](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221104062132736.png)
+![그림](/image/image-20221104062132736.png)
 
 - LASSO에 대한 L1 페널티는 다음과 같이 모델 가중치의 절대 크기의 합으로 정의됨.
 
-![image-20221104062212349](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221104062212349.png)
+![그림](/image/image-20221104062212349.png)
 
  LASSO의 한계는 m > n인 경우 최대 n개의 특성을 선택한다는 것이다. 
 
@@ -395,7 +393,7 @@ RANSAC를 사용하여 이 데이터 세트에서 이상값의 잠재적인 영�
 - 포화 모델은 항상 훈련 데이터에 완벽하게 맞을 수 있지만 보간 형식일 뿐이므로 잘 일반화되지 않음.
 - 능선 회귀와 LASSO 간의 절충안은 m > n인 경우 n개 이상의 특징을 선택하는 데 사용할 수 있도록 희소성을 생성하기 위한 L1 페널티와 L2 페널티가 있는 탄력적 네트임
 
-![image-20221104062244307](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221104062244307.png)
+![그림](/image/image-20221104062244307.png)
 
 
 
@@ -403,7 +401,7 @@ RANSAC를 사용하여 이 데이터 세트에서 이상값의 잠재적인 영�
 
 선형성 가정 위반을 설명하는 한 가지 방법은 다항식 항을 추가하여 다항식 회귀 모델을 사용하는 것이다.
 
-![image-20221104061705885](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221104061705885.png)
+![그림](/image/image-20221104061705885.png)
 
 - d는 다항식의 차수를 나타냄. 
 - 다항식 회귀를 사용하여 비선형 관계를 모델링할 수 있지만 선형 회귀 계수 w로 인해 여전히 다중 선형 회귀 모델로 간주됨. 
@@ -418,7 +416,7 @@ RANSAC를 사용하여 이 데이터 세트에서 이상값의 잠재적인 영�
 
 분류를 위해 결정 트리를 사용할 때 엔트로피를 불순도 측정으로 정의하여 정보 이득(IG)을 최대화하는 기능 분할을 결정합니다. 이는 이진 분할에 대해 다음과 같이 정의된다.
 
-![image-20221104063041023](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221104063041023.png)
+![그림](/image/image-20221104063041023.png)
 
 - x(i)는 분할을 수행하는 기능
 - N(p)는 상위 노드의 학습 예제 수
@@ -430,11 +428,11 @@ RANSAC를 사용하여 이 데이터 세트에서 이상값의 잠재적인 영�
 
 회귀에 의사 결정 트리를 사용하려면 연속 변수에 적합한 불순물 메트릭이 필요하므로 노드 t의 불순물 측정을 대신 MSE로 정의한다.
 
-![image-20221104063254974](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221104063254974.png)
+![그림](/image/image-20221104063254974.png)
 
 여기서 Nt는 노드 t의 훈련 예제 수, Dt는 노드 t의 훈련 부분 집합, 𝑦𝑦(𝑖𝑖𝑖는 실제 목표 값, 𝑦𝑦̂𝑡𝑡은 예측 목표 값(샘플 평균)입니다.
 
-![image-20221104063316620](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221104063316620.png)
+![그림](/image/image-20221104063316620.png)
 
 의사 결정 트리 회귀의 맥락에서 MSE는 종종 노드 내 분산이라고 하며, 이것이 분할 기준이 분산 감소로도 더 잘 알려진 이유입니다.
 
@@ -442,7 +440,7 @@ RANSAC를 사용하여 이 데이터 세트에서 이상값의 잠재적인 영�
 
 리고 회귀 트리가 비선형 데이터의 추세를 비교적 잘 포착할 수도 있다. 그러나 이 모델의 한계는 원하는 예측의 연속성과 미분성을 포착하지 못한다는 점이다. 또한 데이터가 과대적합되거나 과소적합되지 않도록 적절한 트리 깊이 값을 선택하는 데 주의해야 한다.
 
-![image-20221104063403514](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221104063403514.png)
+![그림](/image/image-20221104063403514.png)
 
 
 
@@ -458,7 +456,7 @@ RANSAC를 사용하여 이 데이터 세트에서 이상값의 잠재적인 영�
 
 
 
-![image-20221104063606026](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221104063606026.png)
+![그림](/image/image-20221104063606026.png)
 
 
 
