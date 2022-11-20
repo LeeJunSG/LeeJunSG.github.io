@@ -1,6 +1,6 @@
 15장
 
-Modeling Sequential Data Using Recurrent Neural Networks
+## Modeling Sequential Data Using Recurrent Neural Networks
 
 ​    
 
@@ -32,7 +32,7 @@ Modeling Sequential Data Using Recurrent Neural Networks
 
 
 
-The different categories of sequence modeling
+### The different categories of sequence modeling
 
 
 
@@ -50,7 +50,7 @@ RNNs for modeling sequences
 
 ​                       
 
-Understanding the dataflow in RNNs
+### Understanding the dataflow in RNNs
 
 입력 계층(x), 숨겨진 계층(h) 및 출력 계층(o)이 많은 단위를 포함하는 벡터로 RNN의 데이터 흐름을 나타내면 다음과 같다.
 
@@ -80,7 +80,7 @@ RNN에서 숨겨진 레이어는 현재 시간 스텝의 입력 레이어와 이
 
 
 
-Computing activations in an RNN
+### Computing activations in an RNN
 
 
 
@@ -112,7 +112,7 @@ Hidden recurrence versus output recurrence
 
 
 
-The challenges of learning long-range interactions
+### The challenges of learning long-range interactions
 
 
 
@@ -126,7 +126,7 @@ The challenges of learning long-range interactions
 
 
 
-Long short-term memory cells
+### Long short-term memory cells
 
 다중 유발 요인 때문에 손실 함수의 그레이디언트를 계산할 때 소위 소멸 및 폭발 그레이디언트 문제가 발생한다.
 
@@ -142,7 +142,7 @@ LSTM은 사라지는 기울기 문제(S에 의한 장기 단기 메모리)를 �
 
 
 
-Project one – predicting the sentiment of IMDb movie reviews
+### Project one – predicting the sentiment of IMDb movie reviews
 
 다대일 아키텍처를 사용하여 감정 분석을 위한 다층 RNN 코드는 다음과 같다.
 
