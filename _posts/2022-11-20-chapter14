@@ -1,61 +1,146 @@
-14장 Classifying Images with Deep Convolutional Neural Networks
+14장 
 
-​    
+## Classifying Images with Deep Convolutional Neural Networks
 
-이전 장에서는 PyTorch 신경망과 자동 미분 모듈의 다양한 측면을 자세히 살펴보았고 텐서와 장식 기능에 익숙해져 토치.nn 작업 방법을 배웠습니다. 이 장에서는 이제 이미지 분류를 위한 컨볼루션 신경망(CNN)에 대해 배울 것입니다. 우리는 상향식 접근법을 사용하여 CNN의 기본 구성 요소에 대해 논의하는 것으로 시작할 것입니다. 그런 다음 CNN 아키텍처에 대해 더 자세히 살펴보고 파이토치에서 CNN을 구현하는 방법을 알아보겠습니다. 이 장에서는 다음 항목을 다룹니다.
 
-• 1차원 및 2차원에서의 컨볼루션 연산입니다.
 
-• CNN 아키텍처의 구성 요소입니다.
+### Understanding CNNs and feature hierarchies
 
-• PyTorch에서 심층 CNN을 구현합니다.
+중요한 (관련) 기능을 성공적으로 추출하는 것은 모든 기계 학습 알고리듬의 성능에 핵심이며, 기존의 기계 학습 모델은 도메인 전문가가 제공하거나 계산 기능 추출 기술을 기반으로 하는 입력 기능에 의존한다.
 
-• 일반화 성능을 개선하기 위한 데이터 확대 기술입니다.
+CNN과 같은 특정 유형의 NN은 특정 작업에 가장 유용한 원시 데이터에서 기능을 자동으로 학습할 수 있습니다. 이러한 이유로 CNN 레이어를 특징 추출기로 간주하는 것이 일반적이다.
 
-• 누군가 웃고 있는지 여부를 인식하기 위한 얼굴 CNN 분류기를 구현합니다.
+초기 레이어는 원시 데이터에서 낮은 수준의 특징을 추출하고, 후기 레이어는 이러한 특징을 사용하여 연속적인 목표 값 또는 클래스 레이블을 예측한다.
 
-​    
+특정 유형의 다층 NN, 특히 심층 CNN은 낮은 수준의 기능을 계층별 방식으로 결합하여 높은 수준의 기능을 형성함으로써 소위 기능 계층을 구성한다. 
 
-The building blocks of CNNs
+CNN은 입력 이미지에서 피쳐 맵을 계산합니다. 여기서 각 요소는 입력 이미지의 픽셀의 로컬 패치에서 가져오는데, 이는 다음 그림처럼 확인 할 수 있다.
 
-Understanding CNNs and feature hierarchies
+![image-20221120233551918](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221120233551918.png)
 
-Performing discrete convolutions
+이 픽셀의 로컬 패치를 로컬 수신 필드라고 합니다. CNN은 일반적으로 이미지와 관련된 작업에서 매우 잘 수행되며, 이는 크게 두 가지 중요한 아이디어 때문이다. 
 
-Discrete convolutions in one dimension
+- 첫번째로 연결이 희박성 : 기능 맵의 단일 요소는 작은 픽셀 패치에만 연결됩니다. MLP의 경우와 같이 전체 입력 이미지에 연결하는 것과는 매우 다르다.
 
-Padding inputs to control the size of the output feature maps
+- 매개 변수 공유: 입력 이미지의 다른 패치에 동일한 가중치가 사용된다.
 
-Determining the size of the convolution output
 
-Performing a discrete convolution in 2D
+이 두 가지 아이디어의 직접적인 결과로, 완전히 연결된 기존의 MLP를 컨볼루션 레이어로 대체하면 네트워크의 가중치(파라미터) 수가 상당히 감소하며, 두드러진 특징을 포착하는 능력이 향상된다. 즉, 이미지 데이터의 맥락에서, 일반적으로 가까운 픽셀이 서로 멀리 떨어져 있는 픽셀보다 서로 더 관련이 있다고 가정된다.
 
-Subsampling layers
 
-Putting everything together – implementing a CNN
 
-Working with multiple input or color channels
+### Padding inputs to control the size of the output feature maps
 
-Regularizing an NN with L2 regularization and dropout
+유한 크기의 출력 벡터를 계산하기 위해 컨볼루션에서 제로 패딩만을 사용한다. 기술적으로 패딩은 임의의 𝑝>0으로 적용 가능하며, p의 선택에 따라 경계 셀은 x의 중간에 있는 셀과 다르게 처리될 수 있다.
+이제 n = 5 및 m = 3인 경우의 예를 생각해 보십시오. 그런 다음 p = 0인 경우 x[0]는 하나의 출력 요소(예: y[0])를 계산하는 데만 사용되고 x[1]은 두 개의 출력 요소(예: y[0] 및 y[1])를 계산하는 데 사용된다. 따라서 x의 요소에 대한 이 다른 처리는 대부분의 계산에서 나타났기 때문에 중간 요소인 x[2]에 인위적으로 더 중점을 둘 수 있다. p = 2를 선택하면 이 문제를 피할 수 있다. 이 경우 x의 각 요소는 y의 세 가지 요소를 계산하는 데 포함된다.
+또한 출력 y의 크기는 사용하는 패딩 전략의 선택에 따라 달라지며, 일반적으로 사용되는 패딩 모드에는 전체, 동일 및 유효의 세 가지 모드 있으며 이에 대해서는 다음과 같이 나타낼 수 있다.
 
-Loss functions for classification
+![image-20221120235416442](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221120235416442.png)
 
-Implementing a deep CNN using PyTorch
+커널 크기가 3x3이고 스트라이드가 1인 단순한 5x5 픽셀 입력에 대한 세 가지 다른 패딩 모드로 CNN에서 가장 일반적으로 사용되는 패딩 모드는 동일한 패딩이다.
 
-The multilayer CNN architecture
 
-Loading and preprocessing the data
 
-Implementing a CNN using the torch.nn module
+### Performing a discrete convolution in 2D
 
-Configuring CNN layers in PyTorch
+크기가 3x3인 커널을 사용하여 크기가 8x8인 입력 행렬의 2D 컨볼루션을 보여준다. 입력 매트릭스는 p = 1인 0으로 패딩되며, 결과적으로 2D 컨볼루션의 출력은 8x8 크기가 된다. 이를 그림으로 나타내면, 다음과 같다.
 
-Constructing a CNN in PyTorch
+![image-20221121000048403](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221121000048403.png)
 
-Smile classification from face images using a CNN
 
-Loading the CelebA dataset
 
-Image transformation and data augmentation
 
-Training a CNN smile classifier
+
+이때, 패딩 p = (1, 1) 및 스트라이드 = (2, 2)를 사용하여 입력 행렬 X3x3과 커널 행렬 W3x3 사이의 2D 컨볼루션 계산을 보여줍니다. 지정된 패딩에 따라 입력 매트릭스의 각 면에 0의 레이어가 하나씩 추가되어 패딩 매트릭스가 생성되는데 이는 다음과 같이 표시 할 수 있다.
+
+![image-20221121000942798](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221121000942798.png)
+
+이 행렬의 회전은 전치 행렬과 같지 않습니다. NumPy에서 회전 필터를 얻으려면 W_rot=W[::-1,:-1]로 가능하다. 다음으로, Xp가 추가된 패딩 입력 행렬을 따라 슬라이딩 창처럼 회전된 필터 행렬을 이동하고, 다은은 π 연산자로 표시된 요소별 곱의 합을 계산할 수 있으며, 다음과 같다.
+
+![image-20221121001215292](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221121001215292.png)
+
+
+
+### Subsampling layers
+
+서브샘플링은 CNN에서 일반적으로 최대 풀링과 평균 풀링(평균 풀링이라고도 함)의 두 가지 형태의 풀링 작업에 적용된다. 풀링 레이어는 일반적으로 P(n1xn2)로 표시되며, 첨자는 최대 또는 평균 연산이 수행되는 이웃의 크기를 결정한다. 여기서 이웃의 크기를 풀링 크기라고 부릅니다. 
+
+이러한 풀링의 작동은 다음과 같이 표현할 수 있다. ![image-20221121001322281](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221121001322281.png)
+
+여기서 max-pooling은 이웃에서 최대값을 가져오며, 픽셀의 근거리 및 평균 제곱은 평균을 계산한다. 이런 풀링의 이점은 두 가지이다.
+
+- 로컬 불변성을 도입 : 풀링(최대 풀링)은 지역 이웃의 작은 변화가 최대 풀링의 결과를 바꾸지 않는다는 것을 의미하며, 입력 데이터의 노이즈에 더 강한 피쳐를 생성하는 데 도움이 된다.
+
+- 계산 효율성을 증가 : 풀링은 피쳐의 크기를 줄임으로 형상의 수를 줄이면 과적합의 정도도 감소할 수 있다.
+
+
+
+### Working with multiple input or color channels
+
+컨볼루션 레이어에 대한 입력은 치수가 N1xN2인 하나 이상의 2D 어레이 또는 행렬을 포함할 수 있다. 이러한 N1×N2 행렬을 채널이라고 한다. 컨볼루션 레이어의 기존 구현은 입력으로서 3차원 배열과 같은 3등급 텐서 표현이라고 한다. 여기서 C(in)은 입력 채널의 수이다. 이때, 세 개의 입력 채널이 있으며, 커널 텐서는 4차원인 각 커널 매트릭스로 m1xm2로 표시되며, 각 입력 채널마다 하나씩 세 개가 있고,  5개의 출력 기능 맵을 설명하는 5개의 커널이 있는 피쳐 맵을 서브샘플링하기 위한 풀링 레이어의 예는 다음과 같이 표현할 수 있다. 
+
+![image-20221121003509397](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221121003509397.png)
+
+위와 같은 컨볼루션 연산은 일반적으로 여러 색상 채널이 있는 입력 이미지를 행렬 스택으로 처리하여 수행한다
+
+
+
+### Regularizing an NN with L2 regularization and dropout
+
+
+
+완전 연결된 NN을 다루든 CNN을 다루든 네트워크의 크기를 선택하는 것은 항상 어려운 문제다.
+
+ 네트워크의 용량은 대략적으로 학습할 수 있는 기능의 복잡성 수준을 의미한다.
+
+ 소규모 네트워크 또는 상대적으로 매개 변수 수가 적은 네트워크는 용량이 낮기 때문에 적합하지 않아 성능이 저하될 가능성이 있다. 복잡한 데이터 세트의 기본 구조를 학습할 수 없기 때문이다.
+
+그러나 매우 큰 네트워크는 과적합을 초래할 수 있으며, 여기서 네트워크는 훈련 데이터를 기억하고 보류된 테스트 데이터 세트에서 낮은 성능을 달성하면서 훈련 데이터 세트를 매우 잘 수행합니다. 
+
+ 실제 머신 러닝 문제를 다룰 때, 우리는 네트워크가 얼마나 큰 우선순위가 되어야 하는지 모른다.
+
+이 문제를 해결하는 한 가지 방법은 상대적으로 큰 용량의 네트워크를 구축하는 것입니다(실제로는 필요한 용량보다 약간 큰 용량을 선택하려고 합니다). 그런 다음 과적합을 방지하기 위해 보류된 테스트 데이터 세트와 같은 새로운 데이터에 대해 좋은 일반화 성능을 달성하기 위해 하나 또는 여러 정규화 체계를 적용할 수 있습니다.
+ L2 정규화는 NN을 정규화하는 방법은 이 섹션에서 논의하는 드롭아웃과 같이 사용된다
+
+
+
+드롭아웃의 사용 전에 완전히 연결된 네트워크 내에서 L2 정규화를 사용한다.
+
+
+
+이러한 드롭아웃은 과적합을 피하기 위해 NN을 정규화하는 인기 있는 기술로 등장하여 일반화 성능을 향상시켰다. 드롭아웃은 일반적으로 상위 계층의 숨겨진 단위에 적용되며 다음과 같이 작동한다. NN의 훈련 단계 동안 숨겨진 단위의 일부는 확률 p(drop)으로 모든 반복에서 무작위로 드롭된다. 이 탈락 확률은 사용자에 의해 결정되며,  입력 뉴런의 특정 부분을 떨어뜨리면 나머지 뉴런과 관련된 가중치가 누락된(떨어짐) 뉴런을 설명하기 위해 재조정된다.
+이 랜덤 드롭아웃의 효과는 네트워크가 데이터의 중복 표현을 학습하도록 강제하는 것이다. 따라서 네트워크는 훈련 중 언제든지 꺼질 수 있으므로 숨겨진 장치 세트의 활성화에 의존할 수 없으며 데이터에서 더 일반적이고 강력한 패턴을 학습해야 한다.
+
+이 랜덤 드롭아웃은 과적합을 효과적으로 방지할 수 있다.
+
+뉴런의 절반은 무작위로 비활성화 되며, 예측하는 동안 모든 뉴런은 다음 계층의 사전 활성화를 계산하는 데 기여하는 훈련 단계 중에 확률 p = 0.5인 중도 탈락을 적용한 랜덤 드롭아웃의 예이다.
+
+![image-20221121005159050](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221121005159050.png)
+
+위의 그림에서 한 가지 중요한 점은 단위가 훈련 중에만 무작위로 떨어질 수 있는 반면, 평가 단계의 경우 모든 숨겨진 단위가 활성화되어야 한다는 것이다. 훈련 및 예측 중에 전체 활성화가 동일한 척도로 이루어지도록 하려면 활성 뉴런의 활성화를 적절하게 조정해야 한다. 이때, 예측을 할 때마다 항상 활성화를 조정하는 것은 불편하기 때문에 교육 중에 활성화를 조정한다. 이러한 방법은 일반적으로 역 드롭아웃이라고 한다.
+
+
+
+### The multilayer CNN architecture
+
+
+
+앞서 말한 기능들을 통해서 구현하고자 하는 네트워크의 아키텍처는 다음 그림과 같다. 입력은 28x28 그레이스케일이며, 채널 수와 입력 영상 배치를 고려하면 입력 텐서의 치수는 배치 크기×28×28×1일 때의 그림이다.
+
+
+
+![image-20221121005745790](C:\Users\Juns\AppData\Roaming\Typora\typora-user-images\image-20221121005745790.png)
+
+
+
+입력 데이터는 커널 크기가 5x5인 두 개의 컨볼루션 레이어를 통과한다. 첫 번째 컨볼루션에는 32개의 출력 피쳐 맵이 있고 두 번째 컨볼루션에는 64개의 출력 피쳐 맵이 있으며, 각 컨볼루션 레이어 다음에는 최대 풀링 연산 P(2x2)의 하위 샘플링 레이어가 있다. 이후, 완전히 연결된 계층이 출력을 두 번째 완전히 연결된 계층으로 전달하고, 이 계층이 최종 소프트맥스 출력 계층 역할을 하는 것을 확인 할 수 있다.
+
+위의 그림의 각 레이어의 텐서 치수를 정리하면 다음과 같다.
+• 입력: [배치크기x28x28x1]
+• Conv_1: [batch sizex28x28x32]
+• pooling_1: [batch sizex14x14x32]
+• Conv_2: [batch sizex14x14x64]
+• pooling_2: [batch sizex7x7x64]
+• FC_1: [batch sizeX1024]
+• FC_2 및 소프트맥스 레이어: [batch size x 10]
+
